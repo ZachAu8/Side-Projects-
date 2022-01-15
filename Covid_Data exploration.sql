@@ -77,7 +77,7 @@ order by location
 
 Select location, avg(new_cases) AS mean,
 CASE WHEN mean> 10000 THEN 'The country is in high risk' 
-WHEN 100 < mean < 10000 THEN 'The country has medium risk level' 
+WHEN 100 < mean AND mean < 10000 THEN 'The country has medium risk level' 
 ELSE 'The country has low risk' 
 END AS RiskLevel 
 From side_projects..CovidCases 
@@ -91,8 +91,8 @@ Group by location
 Select COUNT(location) 
 From side_projects..CovidCases 
 Where location IN (select location 
-				   From side_projects..CovidDeaths
-				   Where total_deaths > 10000) 
+       From side_projects..CovidDeaths
+       Where total_deaths > 10000) 
 AND total_cases > 100000 
 Group by location 
 order by total_cases 
